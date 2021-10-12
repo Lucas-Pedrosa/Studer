@@ -16,5 +16,45 @@ namespace Studer.Models
         {
 
         }
+
+        public int GetId()
+        {
+            return id;
+        }
+
+        public void SetId(int id)
+        {
+            this.id = id;
+        }
+
+        public string GetNome()
+        {
+            return nome;
+        }
+
+        public void SetNome(string nome)
+        {
+            this.nome = nome;
+        }
+
+        public List<Caracteristica> getCaracteristicas()
+        {
+            return caracteristicas;
+        }
+
+        public void SetCaracteristicas(List<Caracteristica> caracteristicas)
+        {
+            this.caracteristicas = caracteristicas;
+        }
+
+        public string GetAno()
+        {
+            return ano;
+        }
+
+        public void SetAno(string ano)
+        {
+            this.ano = ano;
+        }
     }
 }

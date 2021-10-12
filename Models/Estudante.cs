@@ -18,17 +18,17 @@ namespace Studer.Models
 
         }
 
-        public int getInt()
+        public int GetId()
         {
             return this.id;
         }
 
-        public void setId(int id)
+        public void SetId(int id)
         {
             this.id = id;
         }
 
-        public string getNome()
+        public string GetNome()
         {
             return this.nome;
         }
@@ -38,31 +38,31 @@ namespace Studer.Models
             this.nome = nome;
         }
 
-        public string getEmail()
+        public string GetEmail()
         {
             return this.email;
         }
 
-        public void setEmail(string email)
+        public void SetEmail(string email)
         {
             this.email = email;
         }
-        public string getSenha()
+        public string GetSenha()
         {
             return this.senha;
         }
 
-        public void setSenha(string senha)
+        public void SetSenha(string senha)
         {
             this.senha = senha;
         }
 
-        public string getNascimento()
+        public string GetNascimento()
         {
             return this.nascimento;
         }
 
-        public void setNascimento(string nascimento)
+        public void SetNascimento(string nascimento)
         {
             this.nascimento = nascimento;
         }
