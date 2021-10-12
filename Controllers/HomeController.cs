@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
+using Studer.Database;
 using Studer.Models;
 using System;
 using System.Collections.Generic;
@@ -12,16 +14,52 @@ namespace Studer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private MySqlDatabase MySqlDatabase { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        /*public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }*/
+
+        public HomeController(MySqlDatabase mySqlDatabase)
+        {
+            this.MySqlDatabase = mySqlDatabase;
         }
 
         public IActionResult Index()
         {
+
+            var ret = new List<Estudante>();
+
+            var cmd = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT id, nome FROM estudante";
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var estudante = new Estudante();
+
+                    estudante.setId(Convert.ToInt32(reader["id"]));
+                    estudante.setnome(reader["nome"].ToString());
+
+                    ret.Add(estudante);
+                }
+            }
+
+            if(ret.Count > 0)
+            {
+                int count = 0;
+                while(count < ret.Count)
+                {
+                    Console.WriteLine("Nome: "+ ret[count].getNome());
+                    count++;
+                }
+            }
+
             return View();
         }
+
 
         public IActionResult Privacy()
         {
