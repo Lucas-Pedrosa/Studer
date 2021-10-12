@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using Studer.Database;
 using Studer.Models;
+using Studer.Models.DAO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,8 @@ namespace Studer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private MySqlDatabase MySqlDatabase { get; set; }
+        private EstudanteDAO estudanteDAO;
+        private QuestaoDAO questaoDAO;
 
         /*public HomeController(ILogger<HomeController> logger)
         {
@@ -23,39 +25,20 @@ namespace Studer.Controllers
 
         public HomeController(MySqlDatabase mySqlDatabase)
         {
-            this.MySqlDatabase = mySqlDatabase;
+            this.estudanteDAO = new EstudanteDAO(mySqlDatabase);
+            this.questaoDAO = new QuestaoDAO(mySqlDatabase);
         }
 
         public IActionResult Index()
         {
+            Estudante estudante = new Estudante();
+            Questao questao = new Questao();
 
-            var ret = new List<Estudante>();
+            estudante = this.estudanteDAO.getEstudante(0);
+            questao = this.questaoDAO.getQuestao(0);
 
-            var cmd = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT id, nome FROM estudante";
-
-            using (var reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var estudante = new Estudante();
-
-                    estudante.setId(Convert.ToInt32(reader["id"]));
-                    estudante.setnome(reader["nome"].ToString());
-
-                    ret.Add(estudante);
-                }
-            }
-
-            if(ret.Count > 0)
-            {
-                int count = 0;
-                while(count < ret.Count)
-                {
-                    Console.WriteLine("Nome: "+ ret[count].getNome());
-                    count++;
-                }
-            }
+            Console.WriteLine("nome: "+estudante.getNome());
+            Console.WriteLine("questao: "+questao.GetEnunciado());
 
             return View();
         }
