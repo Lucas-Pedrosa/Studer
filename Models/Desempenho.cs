@@ -16,32 +16,32 @@ namespace Studer.Models
 
         }
 
-        public int getId()
+        public int GetId()
         {
-            return this.id;
+            return id;
         }
 
-        public void setId(int id)
+        public void SetId(int id)
         {
             this.id = id;
         }
 
-        public int getIdEstudante()
+        public int GetIdEstudante()
         {
-            return this.idEstudante;
+            return idEstudante;
         }
 
-        public void setIdEstudante(int idEstudante)
+        public void SetIdEstudante(int idEstudante)
         {
             this.idEstudante = idEstudante;
         }
 
-        public List<Simulado> getListaSimulado()
+        public List<Simulado> GetListaSimulado()
         {
-            return this.listaSimulado;
+            return listaSimulado;
         }
 
-        public void setListaSimulado(List<Simulado> Simulado)
+        public void SetListaSimulado(List<Simulado> listaSimulado)
         {
             this.listaSimulado = listaSimulado;
         }

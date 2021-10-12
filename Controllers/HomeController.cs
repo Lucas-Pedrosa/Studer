@@ -40,8 +40,8 @@ namespace Studer.Controllers
                 {
                     var estudante = new Estudante();
 
-                    estudante.setId(Convert.ToInt32(reader["id"]));
-                    estudante.setnome(reader["nome"].ToString());
+                    estudante.SetId(Convert.ToInt32(reader["id"]));
+                    estudante.Setnome(reader["nome"].ToString());
 
                     ret.Add(estudante);
                 }
@@ -52,7 +52,7 @@ namespace Studer.Controllers
                 int count = 0;
                 while(count < ret.Count)
                 {
-                    Console.WriteLine("Nome: "+ ret[count].getNome());
+                    Console.WriteLine("Nome: "+ ret[count].GetNome());
                     count++;
                 }
             }
