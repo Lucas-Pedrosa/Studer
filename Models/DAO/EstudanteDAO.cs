@@ -28,11 +28,11 @@ namespace Studer.Models.DAO
             {
                 if(reader.Read())
                 {
-                    estudante.setId(Convert.ToInt32(reader["id"]));
-                    estudante.setNome(reader["nome"].ToString());
-                    estudante.setEmail(reader["email"].ToString());
-                    estudante.setSenha(reader["senha"].ToString());
-                    estudante.setNascimento(reader["nascimento"].ToString());
+                    estudante.SetId(Convert.ToInt32(reader["id"]));
+                    estudante.SetNome(reader["nome"].ToString());
+                    estudante.SetEmail(reader["email"].ToString());
+                    estudante.SetSenha(reader["senha"].ToString());
+                    estudante.SetNascimento(reader["nascimento"].ToString());
                 }
                 else
                 {
@@ -56,11 +56,11 @@ namespace Studer.Models.DAO
             {
                 if (reader.Read())
                 {
-                    estudante.setId(Convert.ToInt32(reader["id"]));
-                    estudante.setNome(reader["nome"].ToString());
-                    estudante.setEmail(reader["email"].ToString());
-                    estudante.setSenha(reader["senha"].ToString());
-                    estudante.setNascimento(reader["nascimento"].ToString());
+                    estudante.SetId(Convert.ToInt32(reader["id"]));
+                    estudante.SetNome(reader["nome"].ToString());
+                    estudante.SetEmail(reader["email"].ToString());
+                    estudante.SetSenha(reader["senha"].ToString());
+                    estudante.SetNascimento(reader["nascimento"].ToString());
                 }
                 else
                 {

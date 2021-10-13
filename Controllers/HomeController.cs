@@ -17,6 +17,7 @@ namespace Studer.Controllers
         private readonly ILogger<HomeController> _logger;
         private EstudanteDAO estudanteDAO;
         private QuestaoDAO questaoDAO;
+        private SimuladoDAO simuladoDAO;
 
         /*public HomeController(ILogger<HomeController> logger)
         {
@@ -27,18 +28,22 @@ namespace Studer.Controllers
         {
             this.estudanteDAO = new EstudanteDAO(mySqlDatabase);
             this.questaoDAO = new QuestaoDAO(mySqlDatabase);
+            this.simuladoDAO = new SimuladoDAO(mySqlDatabase);
         }
 
         public IActionResult Index()
         {
             Estudante estudante = new Estudante();
             Questao questao = new Questao();
+            Simulado simulado = new Simulado();
 
             estudante = this.estudanteDAO.getEstudante(0);
             questao = this.questaoDAO.getQuestao(0);
+            simulado = this.simuladoDAO.GetSimulado(0);
 
-            Console.WriteLine("nome: "+estudante.getNome());
+            Console.WriteLine("nome: "+estudante.GetNome());
             Console.WriteLine("questao: "+questao.GetEnunciado());
+            Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());
 
             return View();
         }

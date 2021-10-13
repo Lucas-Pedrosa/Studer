@@ -33,7 +33,7 @@ namespace Studer.Models
             return this.nome;
         }
 
-        public void setNome(string nome)
+        public void SetNome(string nome)
         {
             this.nome = nome;
         }
