@@ -21,7 +21,7 @@ namespace Studer.Models.DAO
             var estudante = new Estudante();
 
             var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT id, nome, email, senha, nascimento FROM estudante where id = @id;";
+            cmd.CommandText = @"SELECT *, nome, email, senha, nascimento FROM estudante where id = @id;";
             cmd.Parameters.AddWithValue("@id", id);
 
             using (var reader = cmd.ExecuteReader())

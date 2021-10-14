@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Studer.Models;
 using Studer.Database;
 using MySql.Data.MySqlClient;
+using Studer.Models.Interfaces;
 
-namespace Studer.Controllers
+namespace Studer.Models.DAO
 {
-    public class SimuladoDAO
+    public class SimuladoDAO : ISimuladoDAO
     {
         private MySqlDatabase mySqlDatabase { get; set; }
 
@@ -17,7 +18,7 @@ namespace Studer.Controllers
             this.mySqlDatabase = mySqlDatabase;
         }
         
-        public Simulado GetSimulado(int idSimulado)
+        public Simulado getSimulado(int idSimulado)
         {
             var simulado = new Simulado();
 

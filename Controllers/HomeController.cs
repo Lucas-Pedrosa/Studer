@@ -15,9 +15,7 @@ namespace Studer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private EstudanteDAO estudanteDAO;
-        private QuestaoDAO questaoDAO;
-        private SimuladoDAO simuladoDAO;
+        private Manager manager;
 
         /*public HomeController(ILogger<HomeController> logger)
         {
@@ -26,23 +24,39 @@ namespace Studer.Controllers
 
         public HomeController(MySqlDatabase mySqlDatabase)
         {
-            this.estudanteDAO = new EstudanteDAO(mySqlDatabase);
-            this.questaoDAO = new QuestaoDAO(mySqlDatabase);
-            this.simuladoDAO = new SimuladoDAO(mySqlDatabase);
+            this.manager = new Manager(mySqlDatabase);
         }
 
         public IActionResult Index()
         {
-            Estudante estudante = new Estudante();
+            /*Estudante estudante = new Estudante();
             Questao questao = new Questao();
             Simulado simulado = new Simulado();
 
-            estudante = this.estudanteDAO.getEstudante(0);
-            questao = this.questaoDAO.getQuestao(0);
-            simulado = this.simuladoDAO.GetSimulado(0);
+            estudante = this.manager.GetEstudanteDAO().getEstudante(0);
+            questao = this.manager.GetQuestaoDAO().getQuestao(0);
+            simulado = this.manager.GetSimuladoDAO().getSimulado(0);
 
             Console.WriteLine("nome: "+estudante.GetNome());
             Console.WriteLine("questao: "+questao.GetEnunciado());
+            Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());*/
+
+            Estudante estudante1 = new Estudante();
+
+            estudante1.SetEmail("matheus@gmail.com");
+            estudante1.SetNome("Matheus Souza");
+            estudante1.SetSenha("#%%$1552");
+            estudante1.SetNascimento("16/01/1986");
+
+            manager.GetEstudanteDAO().cadastro(estudante1.GetNome(), estudante1.GetEmail(), estudante1.GetSenha(), estudante1.GetNascimento());
+
+            // Login
+            Estudante estudante2 = manager.GetEstudanteDAO().login("matheus@gmail.com", "#%%$1552");
+            Console.WriteLine("id: " + estudante2.GetId());
+
+            // Buscar questão de um simulado
+            Simulado simulado = new Simulado();
+            simulado = this.manager.GetSimuladoDAO().getSimulado(1);
             Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());
 
             return View();
