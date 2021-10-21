@@ -56,3 +56,8 @@ O Studer é uma plataforma onde um estudante poderá realizar simulados, dividid
     </br>
     <img alt="Studer" title="Studer" src="./wwwroot/UML/Builder Estudante.png" />
     </br></br>
+
+- <h3> State </h3>
+    </br>
+    <img alt="Studer" title="Studer" src="./wwwroot/UML/Estudante State.png" />
+    </br></br>
