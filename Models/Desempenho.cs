@@ -12,9 +12,7 @@ namespace Studer.Models
         private List<Simulado> listaSimulado;
 
         public Desempenho()
-        {
-
-        }
+        {}
 
         public int GetId()
         {

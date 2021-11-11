@@ -13,9 +13,7 @@ namespace Studer.Models
         private int idVestibular;
 
         public Simulado()
-        {
-
-        }
+        {}
 
         public int GetId()
         {

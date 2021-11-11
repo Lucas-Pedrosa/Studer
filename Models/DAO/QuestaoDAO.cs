@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using Studer.Database;
+using Studer.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Studer.Models.DAO
 {
-    public class QuestaoDAO
+    public class QuestaoDAO : IQuestaoDAO
     {
         private MySqlDatabase mySqlDatabase { get; set; }
 

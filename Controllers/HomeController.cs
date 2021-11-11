@@ -29,17 +29,6 @@ namespace Studer.Controllers
 
         public IActionResult Index()
         {
-            /*Estudante estudante = new Estudante();
-            Questao questao = new Questao();
-            Simulado simulado = new Simulado();
-
-            estudante = this.manager.GetEstudanteDAO().getEstudante(0);
-            questao = this.manager.GetQuestaoDAO().getQuestao(0);
-            simulado = this.manager.GetSimuladoDAO().getSimulado(0);
-
-            Console.WriteLine("nome: "+estudante.GetNome());
-            Console.WriteLine("questao: "+questao.GetEnunciado());
-            Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());*/
 
             Estudante estudante1 = new Estudante();
 

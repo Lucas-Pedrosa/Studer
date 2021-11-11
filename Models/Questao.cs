@@ -19,9 +19,7 @@ namespace Studer.Models
         private int idDisciplina;
 
         public Questao()
-        {
-
-        }
+        {}
 
         public int GetId()
         {

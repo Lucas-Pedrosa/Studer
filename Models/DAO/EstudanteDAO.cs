@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using Studer.Database;
+using Studer.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Studer.Models.DAO
 {
-    public class EstudanteDAO
+    public class EstudanteDAO : IEstudanteDAO
     {
         private MySqlDatabase mySqlDatabase { get; set; }
 
@@ -48,7 +49,7 @@ namespace Studer.Models.DAO
             var estudante = new Estudante();
 
             var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT id FROM estudante where email = @email and senha = @senha;";
+            cmd.CommandText = @"SELECT * FROM estudante where email = @email and senha = @senha;";
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@senha", senha);
 

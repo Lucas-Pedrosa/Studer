@@ -21,17 +21,17 @@ namespace Studer.Models.DAO
 
         public IEstudanteDAO GetEstudanteDAO()
         {
-            return (IEstudanteDAO) this.estudanteDAO;
+            return this.estudanteDAO;
         }
 
         public ISimuladoDAO GetSimuladoDAO()
         {
-            return (ISimuladoDAO)this.simuladoDAO;
+            return this.simuladoDAO;
         }
 
         public IQuestaoDAO GetQuestaoDAO()
         {
-            return (IQuestaoDAO)this.questaoDAO;
+            return this.questaoDAO;
         }
     }
 }

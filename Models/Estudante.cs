@@ -12,11 +12,10 @@ namespace Studer.Models
         private string email;
         private string nascimento;
         private string senha;
+        private Desempenho desempenho;
 
         public Estudante()
-        {
-
-        }
+        {}
 
         public int GetId()
         {
@@ -65,6 +64,16 @@ namespace Studer.Models
         public void SetNascimento(string nascimento)
         {
             this.nascimento = nascimento;
+        }
+
+        public Desempenho GetDesempenho()
+        {
+            return this.desempenho;
+        }
+
+        public void setDesempenho(Desempenho desempenho)
+        {
+            this.desempenho = desempenho;
         }
 
     }
