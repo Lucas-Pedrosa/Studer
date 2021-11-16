@@ -29,7 +29,7 @@ namespace Studer.Controllers
 
         public IActionResult Index()
         {
-
+            /*
             Estudante estudante1 = new Estudante();
 
             estudante1.SetEmail("matheus@gmail.com");
@@ -47,6 +47,7 @@ namespace Studer.Controllers
             Simulado simulado = new Simulado();
             simulado = this.manager.GetSimuladoDAO().getSimulado(1);
             Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());
+            */
 
             return View();
         }

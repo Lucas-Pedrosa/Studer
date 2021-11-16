@@ -2,9 +2,6 @@
 using Studer.Database;
 using Studer.Models.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Studer.Models.DAO
 {
@@ -22,7 +19,7 @@ namespace Studer.Models.DAO
             var estudante = new Estudante();
 
             var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT *, nome, email, senha, nascimento FROM estudante where id = @id;";
+            cmd.CommandText = @"SELECT *, nome, email, senha, nascimento FROM estudante WHERE id = @id;";
             cmd.Parameters.AddWithValue("@id", id);
 
             using (var reader = cmd.ExecuteReader())
@@ -49,7 +46,7 @@ namespace Studer.Models.DAO
             var estudante = new Estudante();
 
             var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM estudante where email = @email and senha = @senha;";
+            cmd.CommandText = @"SELECT * FROM estudante WHERE email = @email AND senha = @senha;";
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@senha", senha);
 
@@ -62,20 +59,20 @@ namespace Studer.Models.DAO
                     estudante.SetEmail(reader["email"].ToString());
                     estudante.SetSenha(reader["senha"].ToString());
                     estudante.SetNascimento(reader["nascimento"].ToString());
+
+                    return estudante;
                 }
                 else
                 {
                     return null;
                 }
             }
-
-            return estudante;
         }
 
         public bool cadastro(string nome, string email, string senha, string nascimento)
         {
             var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"insert into estudante(nome, email, senha, nascimento) values(@nome, @email, @senha, @nascimento);";
+            cmd.CommandText = @"INSERT INTO estudante(nome, email, senha, nascimento) VALUES (@nome, @email, @senha, @nascimento);";
             cmd.Parameters.AddWithValue("@nome", nome);
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@senha", senha);
