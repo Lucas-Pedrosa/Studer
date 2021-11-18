@@ -54,7 +54,7 @@ namespace Studer.Controllers
                     ExpiresUtc = System.DateTime.Now.AddHours(1)
                 });
 
-                return Json(new { Msg = "Válido", usuario = $"{estudante.GetNome()}", id = $"{estudante.GetId()}" });
+                return Json(new { Msg = "Sucesso", usuario = $"{estudante.GetNome()}", id = $"{estudante.GetId()}", Url = "/teste" });
             }
         }
 
