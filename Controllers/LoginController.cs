@@ -24,7 +24,6 @@ namespace Studer.Controllers
             {
                 return Json(new { Msg = "Usuário já logado!" });
             }
-
             return View();
         }
 
