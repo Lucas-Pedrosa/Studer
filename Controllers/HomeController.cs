@@ -35,6 +35,7 @@ namespace Studer.Controllers
                 Estudante estudante = new Estudante();
                 estudante.SetNome(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
                 estudante.SetEmail(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value);
+                estudante.SetId(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
                 return View(estudante);
             }
 
@@ -60,6 +61,24 @@ namespace Studer.Controllers
             simulado = this.manager.GetSimuladoDAO().getSimulado(1);
             Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());
             */
+        }
+
+        public IActionResult CriarSimulado()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Simulado");
+            }
+            return View();
+        }
+
+        public IActionResult VerDesempenho()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Desempenho");
+            }
+            return View();
         }
 
         public IActionResult Privacy()
