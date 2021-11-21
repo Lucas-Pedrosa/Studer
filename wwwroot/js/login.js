@@ -1,12 +1,12 @@
 ﻿function Sucesso(data) {
     Swal.fire({
-        icon: 'success',
+        icon: data.icon,
         title: data.msg,
         showConfirmButton: false,
         timer: 1600
     });
 
-    setTimeout(function () { location.href += data.url.toString(); }, 1500);
+    setTimeout(function () { location.href += data.url.toString(); }, 1600);
 }
 
 function Falha() {

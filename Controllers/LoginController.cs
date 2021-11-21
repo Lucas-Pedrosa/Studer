@@ -18,15 +18,17 @@ namespace Studer.Controllers
             manager = new Manager(mySqlDatabase);
         }
 
+        // GET: Login
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Json(new { Msg = "Usuário já logado!" });
+                return Json(new { msg = "Usuário já logado!" });
             }
             return View();
         }
 
+        // POST: Login/Logar
         [HttpPost]
         public async Task<IActionResult> Logar(string email, string senha, bool manterlogado)
         {
@@ -34,7 +36,7 @@ namespace Studer.Controllers
 
             if (estudante is null)
             {
-                return Json(new { Msg = "Invalido" });
+                return Json(new { msg = "Credenciais incorretas, tente novamente", icon = "error" });
             }
             else
             {
@@ -54,10 +56,11 @@ namespace Studer.Controllers
                     ExpiresUtc = System.DateTime.Now.AddHours(1)
                 });
 
-                return Json(new { Msg = "Sucesso", usuario = $"{estudante.GetNome()}", id = $"{estudante.GetId()}", Url = "/teste" });
+                return Json(new { msg = $"Bem vindo {estudante.GetNome()}", usuario = $"{estudante.GetNome()}", id = $"{estudante.GetId()}", url = "/teste", icon = "success" });
             }
         }
 
+        // GET: Login/Logout
         public async Task<IActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
