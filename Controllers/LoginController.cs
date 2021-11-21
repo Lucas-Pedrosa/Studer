@@ -60,6 +60,12 @@ namespace Studer.Controllers
             }
         }
 
+        // GET: Login/Cadastro
+        public IActionResult Cadastro()
+        {
+            return View();
+        }
+
         // GET: Login/Logout
         public async Task<IActionResult> Logout()
         {
