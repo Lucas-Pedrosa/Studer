@@ -6,7 +6,8 @@
         timer: 1600
     });
 
-    setTimeout(function () { location.href += data.url.toString(); }, 1600);
+    console.log(window.location.origin + data.url);
+    setTimeout(function () { location.href = (window.location.origin + data.url) }, 1600);
 }
 
 function Falha() {

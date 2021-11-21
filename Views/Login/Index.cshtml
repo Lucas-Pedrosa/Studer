@@ -18,11 +18,11 @@
                             <form asp-controller="Login" asp-action="Logar" method="post" data-ajax="true" data-ajax-method="post"
                                   data-ajax-success="Sucesso" data-ajax-failure="Falha">
                                 <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+                                    <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" required autofocus>
                                     <label for="floatingInput">Email</label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="floatingPassword" name="senha" placeholder="Password">
+                                    <input type="password" class="form-control" id="floatingPassword" name="senha" placeholder="Password" required>
                                     <label for="floatingPassword">Senha</label>
                                 </div>
 
@@ -36,7 +36,7 @@
                                 </div>
                             </form>
 
-                            <p>Não possui conta? <a asp-controller="Login" asp-action="Cadastro">Cadastre-se</a></p>
+                            <p class="text-center">Não possui conta? <a asp-controller="Login" asp-action="Cadastro">Cadastre-se</a></p>
 
                         </div>
                     </div>
