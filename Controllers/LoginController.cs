@@ -23,7 +23,7 @@ namespace Studer.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Json(new { msg = "Usuário já logado!" });
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -56,7 +56,7 @@ namespace Studer.Controllers
                     ExpiresUtc = System.DateTime.Now.AddHours(1)
                 });
 
-                return Json(new { msg = $"Bem vindo {estudante.GetNome()}", usuario = $"{estudante.GetNome()}", id = $"{estudante.GetId()}", url = "/teste", icon = "success" });
+                return Json(new { msg = $"Login efetuado com sucesso!", url = "Home", icon = "success" });
             }
         }
 

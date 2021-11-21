@@ -1,8 +1,17 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Página Inicial";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
+@model Estudante
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if(!(Model.GetNome() is null))
+    {
+        <h1 class="display-4" id="MainText">Olá @Model.GetNome()</h1>
+    }
+    else
+    {
+        <h1 class="display-4" id="MainText">Olá</h1>
+    }
 </div>

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Studer.Controllers
@@ -29,6 +30,17 @@ namespace Studer.Controllers
 
         public IActionResult Index()
         {
+            if(User.Identity.IsAuthenticated)
+            {
+                Estudante estudante = new Estudante();
+                estudante.SetNome(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
+                estudante.SetEmail(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value);
+                return View(estudante);
+            }
+
+            return RedirectToAction("Index", "Login");
+            
+
             /*
             Estudante estudante1 = new Estudante();
 
@@ -48,10 +60,7 @@ namespace Studer.Controllers
             simulado = this.manager.GetSimuladoDAO().getSimulado(1);
             Console.WriteLine("questao: " + simulado.GetListaQuestoes()[0].GetEnunciado());
             */
-
-            return View();
         }
-
 
         public IActionResult Privacy()
         {
