@@ -83,7 +83,8 @@ namespace Studer.Models.DAO
             if (recs == 1)
             {
                 return true;
-            } else
+            } 
+            else
             {
                 return false;
             }

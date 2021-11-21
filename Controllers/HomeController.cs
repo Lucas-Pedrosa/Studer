@@ -30,7 +30,7 @@ namespace Studer.Controllers
 
         public IActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 Estudante estudante = new Estudante();
                 estudante.SetNome(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Studer.Database;
 using Studer.Models;
 using Studer.Models.DAO;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -40,24 +41,58 @@ namespace Studer.Controllers
             }
             else
             {
-                List<Claim> direitosAcesso = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, estudante.GetId().ToString()),
-                    new Claim(ClaimTypes.Name, estudante.GetNome()),
-                    new Claim(ClaimTypes.Email, estudante.GetEmail())
-                };
+                await SetClaims(estudante, manterlogado);
 
-                var identity = new ClaimsIdentity(direitosAcesso, "Identity.Login");
-                var userPrincipal = new ClaimsPrincipal(new[] { identity });
-
-                await HttpContext.SignInAsync(userPrincipal, new AuthenticationProperties
-                {
-                    IsPersistent = manterlogado,
-                    ExpiresUtc = System.DateTime.Now.AddHours(1)
-                });
-
-                return Json(new { msg = $"Login efetuado com sucesso!", url = "Home", icon = "success" });
+                return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
+        }
+
+        // GET: Login/Cadastro
+        public IActionResult Cadastro()
+        {
+            return View();
+        }
+
+        // POST: Login/Cadastrar
+        [HttpPost]
+        public async Task<IActionResult> Cadastrar(string nome, string email, string senha, string confirmarSenha)
+        {
+            if (senha.Equals(confirmarSenha))
+            {
+                if (manager.GetEstudanteDAO().cadastro(nome, email, senha, "21/11/2021"))
+                {
+                    Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
+
+                    await SetClaims(estudante, false);
+
+                    return Json(new { msg = "Cadastro efetuado com sucesso", icon = "success", url = "/Home" });
+                }
+            }
+            else
+            {
+                return Json(new { msg = "Senhas não batem", icon = "error" });
+            }
+            
+            return RedirectToAction("Index", "Cadastro");
+        }
+
+        private async Task SetClaims(Estudante estudante, bool manterlogado)
+        {
+            List<Claim> direitosAcesso = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, estudante.GetId().ToString()),
+                new Claim(ClaimTypes.Name, estudante.GetNome()),
+                new Claim(ClaimTypes.Email, estudante.GetEmail())
+            };
+
+            var identity = new ClaimsIdentity(direitosAcesso, "Identity.Login");
+            var userPrincipal = new ClaimsPrincipal(new[] { identity });
+
+            await HttpContext.SignInAsync(userPrincipal, new AuthenticationProperties
+            {
+                IsPersistent = manterlogado,
+                ExpiresUtc = System.DateTime.Now.AddHours(1)
+            });
         }
 
         // GET: Login/Logout
