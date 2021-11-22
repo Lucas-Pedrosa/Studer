@@ -18,7 +18,7 @@ namespace Studer.Controllers
                 return View(estudante);
             }
 
-            return View();
+            return RedirectToAction("Index", "Login");
         }
     }
 }
