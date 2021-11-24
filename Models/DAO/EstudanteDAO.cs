@@ -30,7 +30,6 @@ namespace Studer.Models.DAO
                     estudante.SetId(Convert.ToInt32(reader["id"]));
                     estudante.SetNome(reader["nome"].ToString());
                     estudante.SetEmail(reader["email"].ToString());
-                    estudante.SetSenha(reader["senha"].ToString());
                     estudante.SetNascimento(reader["nascimento"].ToString());
                 }
                 else

@@ -42,7 +42,30 @@ namespace Studer.Controllers
             }
             else
             {
-                await SetClaims(estudante, manterlogado);
+                await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), manterlogado);
+                return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
+            }
+        }
+
+        // GET: Login/Professor
+        public IActionResult Professor()
+        {
+            return View();
+        }
+
+        // POST: Login/LogarProfessor
+        [HttpPost]
+        public async Task<IActionResult> LogarProfessor(string email, string senha, bool manterlogado)
+        {
+            Professor professor = manager.GetProfessorDAO().login(email, senha);
+
+            if (professor is null)
+            {
+                return Json(new { msg = "Credenciais incorretas, tente novamente", icon = "error" });
+            }
+            else
+            {
+                await SetClaims(professor.GetId(), professor.GetNome(), professor.GetEmail(), manterlogado);
                 return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
         }
@@ -64,7 +87,7 @@ namespace Studer.Controllers
                     if(manager.GetEstudanteDAO().cadastro(nome, email, senha, "21/11/2021"))
                     {
                         Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
-                        await SetClaims(estudante, false);
+                        await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), false);
                         return Json(new { msg = "Cadastro efetuado com sucesso", icon = "success", url = "/Home" });
                     }
                 }
@@ -81,13 +104,13 @@ namespace Studer.Controllers
             return RedirectToAction("Index", "Cadastro");
         }
 
-        private async Task SetClaims(Estudante estudante, bool manterlogado)
+        private async Task SetClaims(int id, string nome, string email, bool manterlogado)
         {
             List<Claim> direitosAcesso = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, estudante.GetId().ToString()),
-                new Claim(ClaimTypes.Name, estudante.GetNome()),
-                new Claim(ClaimTypes.Email, estudante.GetEmail())
+                new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                new Claim(ClaimTypes.Name, nome),
+                new Claim(ClaimTypes.Email, email)
             };
 
             var identity = new ClaimsIdentity(direitosAcesso, "Identity.Login");

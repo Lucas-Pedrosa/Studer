@@ -46,5 +46,15 @@ namespace Studer.Models
         {
             this.email = email;
         }
+
+        public string GetSenha()
+        {
+            return senha;
+        }
+
+        public void SetSenha(string senha)
+        {
+            this.senha = senha;
+        }
     }
 }
