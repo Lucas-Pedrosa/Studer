@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Studer.Database;
+using Studer.Exceptions;
 using Studer.Models;
 using Studer.Models.DAO;
 using System;
@@ -42,7 +43,6 @@ namespace Studer.Controllers
             else
             {
                 await SetClaims(estudante, manterlogado);
-
                 return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
         }
@@ -59,13 +59,18 @@ namespace Studer.Controllers
         {
             if (senha.Equals(confirmarSenha))
             {
-                if (manager.GetEstudanteDAO().cadastro(nome, email, senha, "21/11/2021"))
+                try
                 {
-                    Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
-
-                    await SetClaims(estudante, false);
-
-                    return Json(new { msg = "Cadastro efetuado com sucesso", icon = "success", url = "/Home" });
+                    if(manager.GetEstudanteDAO().cadastro(nome, email, senha, "21/11/2021"))
+                    {
+                        Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
+                        await SetClaims(estudante, false);
+                        return Json(new { msg = "Cadastro efetuado com sucesso", icon = "success", url = "/Home" });
+                    }
+                }
+                catch(UsuarioRepetidoException)
+                {
+                    return Json(new { msg = "Usuário já cadastrado", icon = "error" });
                 }
             }
             else
