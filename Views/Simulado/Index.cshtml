@@ -1,12 +1,69 @@
 ﻿@{
     ViewData["Title"] = "Página Simulado";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
+     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-@model Estudante
+@model dynamic
+
+<script src="~/js/simulado.js"></script>
 
 <div class="text-center">
 
     <h1 class="display-4" id="MainText">Página Simulado</h1>
 
 </div>
+
+<div class="container px-5 my-5">
+
+    <form asp-controller="Simulado" asp-action="criarSimulado" method="post">
+        <div class="mb-3">
+            <label class="form-label d-block">Formato</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="vestibular" onclick="formatoSimulado()" type="radio" name="formato" value="vestibular" data-sb-validations="required" />
+                <label class="form-check-label" for="vestibulares">Vestibulares</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="disciplina" onclick="formatoSimulado()" type="radio" name="formato" value="disciplina" data-sb-validations="required" />
+                <label class="form-check-label" for="porDisciplina">Por Disciplina</label>
+            </div>
+            <div class="invalid-feedback" data-sb-feedback="formato:required">One option is required.</div>
+        </div>
+        
+        <div class="form-floating mb-3" id="vestibulares" style="display:none">
+            <select class="form-select" aria-label="Vestibular" name="vestibularSelect">
+                
+                @for (int i = 0; i < @Model.vestibulares.Count; i++)
+                {
+                     <option value="@Model.vestibulares[i].GetNome()">@Model.vestibulares[i].GetNome()</option>    
+                }
+
+            </select>
+            <label for="vestibular">Vestibular</label>
+        </div>
+        <div class="form-floating mb-3" id="disciplinas" style="display:none">
+            <select class="form-select" aria-label="Disciplinas" name="disciplinaSelect">
+
+                @for (int i = 0; i < @Model.disciplinas.Count; i++)
+                {
+                     <option value="@Model.disciplinas[i].GetNome()">@Model.disciplinas[i].GetNome()</option>    
+                }
+
+            </select>
+            <label for="disciplinas">Disciplinas</label>
+        </div>
+        <div class="d-none" id="submitSuccessMessage">
+            <div class="text-center mb-3">
+                <div class="fw-bolder">Form submission successful!</div>
+                <p>To activate this form, sign up at</p>
+                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+            </div>
+        </div>
+        <div class="d-none" id="submitErrorMessage">
+            <div class="text-center text-danger mb-3">Error sending message!</div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary btn-lg" id="buttonFormato" type="submit" />Submit</button>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>

@@ -7,6 +7,7 @@ using Studer.Models.DAO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -36,7 +37,11 @@ namespace Studer.Controllers
                 estudante.SetNome(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
                 estudante.SetEmail(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value);
                 estudante.SetId(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
-                return View(estudante);
+
+                dynamic mymodel = new ExpandoObject();
+                mymodel.estudante = estudante;
+
+                return View(mymodel);
             }
 
             return RedirectToAction("Index", "Login");

@@ -11,12 +11,16 @@ namespace Studer.Models.DAO
         private QuestaoDAO questaoDAO;
         private SimuladoDAO simuladoDAO;
         private EstudanteDAO estudanteDAO;
+        private VestibularDAO vestibularDAO;
+        private DisciplinaDAO disciplinasDAO;
 
         public Manager(MySqlDatabase mySqlDatabase)
         {
             this.estudanteDAO = new EstudanteDAO(mySqlDatabase);
             this.simuladoDAO = new SimuladoDAO(mySqlDatabase);
             this.questaoDAO = new QuestaoDAO(mySqlDatabase);
+            this.vestibularDAO = new VestibularDAO(mySqlDatabase);
+            this.disciplinasDAO = new DisciplinaDAO(mySqlDatabase);
         }
 
         public IEstudanteDAO GetEstudanteDAO()
@@ -32,6 +36,16 @@ namespace Studer.Models.DAO
         public IQuestaoDAO GetQuestaoDAO()
         {
             return this.questaoDAO;
+        }
+
+        public IVestibularDAO GetVestibularDAO()
+        {
+            return this.vestibularDAO;
+        }
+
+        public IDisciplinaDAO GetDisciplinaDAO()
+        {
+            return this.disciplinasDAO;
         }
     }
 }

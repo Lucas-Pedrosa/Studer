@@ -10,10 +10,13 @@ namespace Studer.Models
         private int id;
         private string nome;
 
-        public Disciplina()
+        public Disciplina(int id, string nome)
         {
-
+            this.id = id;
+            this.nome = nome;
         }
+
+        public Disciplina(){}
 
         public int GetId()
         {
