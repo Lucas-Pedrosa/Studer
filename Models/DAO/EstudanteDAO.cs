@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using Studer.Database;
+using Studer.Exceptions;
 using Studer.Models.Interfaces;
 using System;
 
@@ -29,7 +30,6 @@ namespace Studer.Models.DAO
                     estudante.SetId(Convert.ToInt32(reader["id"]));
                     estudante.SetNome(reader["nome"].ToString());
                     estudante.SetEmail(reader["email"].ToString());
-                    estudante.SetSenha(reader["senha"].ToString());
                     estudante.SetNascimento(reader["nascimento"].ToString());
                 }
                 else
@@ -71,21 +71,33 @@ namespace Studer.Models.DAO
 
         public bool cadastro(string nome, string email, string senha, string nascimento)
         {
-            var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO estudante(nome, email, senha, nascimento) VALUES (@nome, @email, @senha, @nascimento);";
-            cmd.Parameters.AddWithValue("@nome", nome);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@senha", senha);
-            cmd.Parameters.AddWithValue("@nascimento", nascimento);
-
-            var recs = cmd.ExecuteNonQuery();
-
-            if (recs == 1)
+            try
             {
-                return true;
-            } else
+                var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
+                cmd.CommandText = @"INSERT INTO estudante(nome, email, senha, nascimento) VALUES (@nome, @email, @senha, @nascimento);";
+                cmd.Parameters.AddWithValue("@nome", nome);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@senha", senha);
+                cmd.Parameters.AddWithValue("@nascimento", nascimento);
+
+                var recs = cmd.ExecuteNonQuery();
+
+                if(recs == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(MySqlException e)
             {
-                return false;
+                if (e.Number == 1062)
+                {
+                    throw new UsuarioRepetidoException();
+                }
+                throw new Exception();
             }
         }
     }

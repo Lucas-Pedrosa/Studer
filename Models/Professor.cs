@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace Studer.Models
 {
-    public class Professor
+    public class Professor : Usuario
     {
-        private int id;
-        private string nome;
-        private string email;
         private string senha;
 
         public Professor()
@@ -45,6 +42,16 @@ namespace Studer.Models
         public void SetEmail(string email)
         {
             this.email = email;
+        }
+
+        public string GetSenha()
+        {
+            return senha;
+        }
+
+        public void SetSenha(string senha)
+        {
+            this.senha = senha;
         }
     }
 }

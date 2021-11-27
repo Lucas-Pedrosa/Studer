@@ -6,9 +6,9 @@
 @model dynamic
 
 <div class="text-center">
-    @if(!(Model.estudante.GetNome() is null))
+    @if(!(Model.usuario.nome is null))
     {
-        <h1 class="display-4" id="MainText">Olá @Model.estudante.GetNome()</h1>
+        <h1 class="display-4" id="MainText">Olá @Model.usuario.nome</h1>
     }
     else
     {

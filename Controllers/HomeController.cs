@@ -31,17 +31,18 @@ namespace Studer.Controllers
 
         public IActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-                Estudante estudante = new Estudante();
-                estudante.SetNome(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
-                estudante.SetEmail(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value);
-                estudante.SetId(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+                dynamic myModel = new ExpandoObject();
 
-                dynamic mymodel = new ExpandoObject();
-                mymodel.estudante = estudante;
+                Usuario usuario = new Usuario();
+                usuario.nome = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+                usuario.email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+                usuario.id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                usuario.tipo = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData).Value;
+                myModel.usuario = usuario;
 
-                return View(mymodel);
+                return View(myModel);
             }
 
             return RedirectToAction("Index", "Login");
@@ -74,7 +75,7 @@ namespace Studer.Controllers
             {
                 return RedirectToAction("Index", "Simulado");
             }
-            return View();
+            return RedirectToAction("Index", "Login");
         }
 
         public IActionResult VerDesempenho()
@@ -83,7 +84,7 @@ namespace Studer.Controllers
             {
                 return RedirectToAction("Index", "Desempenho");
             }
-            return View();
+            return RedirectToAction("Index", "Login");
         }
 
         public IActionResult Privacy()

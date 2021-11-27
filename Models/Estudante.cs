@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace Studer.Models
 {
-    public class Estudante
+    public class Estudante : Usuario
     {
-        private int id;
-        private string nome;
-        private string email;
         private string nascimento;
         private string senha;
         private Desempenho desempenho;
