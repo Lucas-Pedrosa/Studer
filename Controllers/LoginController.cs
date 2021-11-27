@@ -42,7 +42,7 @@ namespace Studer.Controllers
             }
             else
             {
-                await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), manterlogado);
+                await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), manterlogado, "aluno");
                 return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
         }
@@ -65,7 +65,7 @@ namespace Studer.Controllers
             }
             else
             {
-                await SetClaims(professor.GetId(), professor.GetNome(), professor.GetEmail(), manterlogado);
+                await SetClaims(professor.GetId(), professor.GetNome(), professor.GetEmail(), manterlogado, "professor");
                 return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
         }
@@ -84,14 +84,14 @@ namespace Studer.Controllers
             {
                 try
                 {
-                    if(manager.GetEstudanteDAO().cadastro(nome, email, senha, "21/11/2021"))
+                    if (manager.GetEstudanteDAO().cadastro(nome, email, senha, "21/11/2021"))
                     {
                         Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
-                        await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), false);
+                        await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), false, "aluno");
                         return Json(new { msg = "Cadastro efetuado com sucesso", icon = "success", url = "/Home" });
                     }
                 }
-                catch(UsuarioRepetidoException)
+                catch (UsuarioRepetidoException)
                 {
                     return Json(new { msg = "Usuário já cadastrado", icon = "error" });
                 }
@@ -104,13 +104,14 @@ namespace Studer.Controllers
             return RedirectToAction("Index", "Cadastro");
         }
 
-        private async Task SetClaims(int id, string nome, string email, bool manterlogado)
+        private async Task SetClaims(int id, string nome, string email, bool manterlogado, string tipo)
         {
             List<Claim> direitosAcesso = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, id.ToString()),
                 new Claim(ClaimTypes.Name, nome),
-                new Claim(ClaimTypes.Email, email)
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.UserData, tipo)
             };
 
             var identity = new ClaimsIdentity(direitosAcesso, "Identity.Login");
