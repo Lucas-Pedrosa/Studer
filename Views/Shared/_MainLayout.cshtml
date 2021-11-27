@@ -1,5 +1,4 @@
-﻿
-@model Usuario
+﻿@model dynamic
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +22,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Model.email</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Model.usuario.email</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Sair</a>
@@ -35,10 +34,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CriarSimulado">Criar Simulado</a>
                         </li>
-                        @if(Model.tipo == "professor")
+                        @if(Model.usuario.tipo == "professor")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CriarSimulado">Criar Questões</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Questao" asp-action="Index">Criar Questões</a>
                             </li>
                         }
                         <li class="nav-item">

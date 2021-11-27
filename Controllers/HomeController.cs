@@ -7,6 +7,7 @@ using Studer.Models.DAO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -32,12 +33,16 @@ namespace Studer.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                dynamic myModel = new ExpandoObject();
+
                 Usuario usuario = new Usuario();
                 usuario.nome = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
                 usuario.email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
                 usuario.id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
                 usuario.tipo = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData).Value;
-                return View(usuario);
+                myModel.usuario = usuario;
+
+                return View(myModel);
             }
 
             return RedirectToAction("Index", "Login");
@@ -70,7 +75,7 @@ namespace Studer.Controllers
             {
                 return RedirectToAction("Index", "Simulado");
             }
-            return View();
+            return RedirectToAction("Index", "Login");
         }
 
         public IActionResult VerDesempenho()
@@ -79,7 +84,7 @@ namespace Studer.Controllers
             {
                 return RedirectToAction("Index", "Desempenho");
             }
-            return View();
+            return RedirectToAction("Index", "Login");
         }
 
         public IActionResult Privacy()

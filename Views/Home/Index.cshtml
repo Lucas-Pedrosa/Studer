@@ -3,12 +3,10 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-@model Usuario
-
 <div class="text-center">
-    @if(!(Model.nome is null))
+    @if(!(Model.usuario.nome is null))
     {
-        <h1 class="display-4" id="MainText">Olá @Model.nome</h1>
+        <h1 class="display-4" id="MainText">Olá @Model.usuario.nome</h1>
     }
     else
     {

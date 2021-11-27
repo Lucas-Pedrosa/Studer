@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Questões";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4" id="MainText">Criar Questões</h1>
+
+    <div class="container px-5 my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card-body p-4">
+
+                    <form>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 10rem;" required></textarea>
+                            <label for="message">Enunciado</label>
+                        </div>
+
+                        <hr />
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <label for="message">Alternativa A</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <label for="message">Alternativa B</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <label for="message">Alternativa C</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <label for="message">Alternativa D</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <label for="message">Alternativa E</label>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-lg disabled" type="submit">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
