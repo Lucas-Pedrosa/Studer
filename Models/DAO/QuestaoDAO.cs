@@ -49,10 +49,10 @@ namespace Studer.Models.DAO
             return questao;
         }
 
-        public Boolean adicionaQuestao(string enunciado, string a, string b, string c, string d, string e, string alternativaCorreta, int idProfessor, int idDisciplina)
+        public Boolean adicionaQuestao(string enunciado, string a, string b, string c, string d, string e, string alternativaCorreta, string idProfessor, int idDisciplina)
         {
             var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"insert into questao(enunciado, a, b, c, d, e, alternativa_correta, id_professor, id_disciplina) values(@enunciado, @a, @b, @c, @d, @e, @alternaticaCorreta, @idProfessor, @idDisciplina);";
+            cmd.CommandText = @"insert into questao(enunciado, a, b, c, d, e, alternativa_correta, id_professor, id_disciplina) values(@enunciado, @a, @b, @c, @d, @e, @alternativaCorreta, @idProfessor, @idDisciplina);";
             cmd.Parameters.AddWithValue("@enunciado", enunciado);
             cmd.Parameters.AddWithValue("@a", a);
             cmd.Parameters.AddWithValue("@b", b);

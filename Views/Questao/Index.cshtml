@@ -3,51 +3,88 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4" id="MainText">Criar Questões</h1>
+<link rel="stylesheet" href="~/css/questao-page.css" />
+
+<div>
+    <h1 class="display-4 text-center" id="MainText">Criar Questão</h1>
 
     <div class="container px-5 my-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card-body p-4">
 
-                    <form>
+                    <form asp-controller="Questao" asp-action="Cadastrar" method="post" data-ajax="true" data-ajax-method="post"
+                                  data-ajax-success="Sucesso"  data-ajax-failure="Falha">
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" type="text" placeholder="Message" style="height: 10rem;" required></textarea>
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 10rem;" name="enunciado" required></textarea>
                             <label for="message">Enunciado</label>
                         </div>
 
                         <hr />
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" name="alternativa_a" required></textarea>
                             <label for="message">Alternativa A</label>
                         </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="alternativaA" name="alternativa" value="A" />
+                            <label for="alternativaA">Alternativa correta</label>
+                        </div>
+                        <hr />
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" name="alternativa_b" required></textarea>
                             <label for="message">Alternativa B</label>
                         </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="alternativaB" name="alternativa" value="B" />
+                            <label for="alternativaB">Alternativa correta</label>
+                        </div>
+                        <hr />
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" name="alternativa_c" required></textarea>
                             <label for="message">Alternativa C</label>
                         </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="alternativaC" name="alternativa" value="C" />
+                            <label for="alternativaC">Alternativa correta</label>
+                        </div>
+                        <hr />
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" name="alternativa_d" required></textarea>
                             <label for="message">Alternativa D</label>
                         </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="alternativaD" name="alternativa" value="D" />
+                            <label for="alternativaD">Alternativa correta</label>
+                        </div>
+                        <hr />
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" required></textarea>
+                            <textarea class="form-control" type="text" placeholder="Message" style="height: 5rem;" name="alternativa_e" required></textarea>
                             <label for="message">Alternativa E</label>
+                        </div>
+                        <div>
+                            <input class="form-check-input" type="radio" id="alternativaE" name="alternativa" value="E" />
+                            <label for="alternativaE">Alternativa correta</label>
                         </div>
 
                         <hr />
 
+                        <div class="form-floating mb-3" id="disciplinas">
+                            <select class="form-select" aria-label="Disciplinas" name="disciplinaSelect">
+                                @foreach(dynamic disciplina in Model.disciplinas)
+                                {
+                                    <option value="@disciplina.GetId()">@disciplina.GetNome()</option>
+                                }
+                            </select>
+                            <label for="disciplinas">Disciplina</label>
+                        </div>
+
                         <div class="d-grid">
-                            <button class="btn btn-primary btn-lg disabled" type="submit">Submit</button>
+                            <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Cadastrar</button>
                         </div>
                     </form>
 

@@ -48,6 +48,8 @@ namespace Studer.Models.DAO
         public IDisciplinaDAO GetDisciplinaDAO()
         {
             return this.disciplinasDAO;
+        }
+
         public IProfessorDAO GetProfessorDAO()
         {
             return this.professorDAO;

@@ -50,6 +50,10 @@ namespace Studer.Controllers
         // GET: Login/Professor
         public IActionResult Professor()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

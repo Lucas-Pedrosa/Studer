@@ -22,28 +22,25 @@ namespace Studer.Controllers
 
         public IActionResult Index()
         {
-
-            Console.WriteLine("Simulado");
-
-            List<Vestibular> vestibulares = this.manager.GetVestibularDAO().getVestibulares();
-            List<Disciplina> disciplinas = this.manager.GetDisciplinaDAO().getDisciplinas();
-
-            dynamic mymodel = new ExpandoObject();
-            mymodel.vestibulares = vestibulares;
-            mymodel.disciplinas = disciplinas;
-
             if (User.Identity.IsAuthenticated)
             {
-                Estudante estudante = new Estudante();
-                estudante.SetNome(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value);
-                estudante.SetEmail(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value);
-                estudante.SetId(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+                List<Vestibular> vestibulares = this.manager.GetVestibularDAO().getVestibulares();
+                List<Disciplina> disciplinas = this.manager.GetDisciplinaDAO().getDisciplinas();
 
-                mymodel.estudante = estudante;
+                dynamic mymodel = new ExpandoObject();
+                mymodel.vestibulares = vestibulares;
+                mymodel.disciplinas = disciplinas;
 
+                Usuario usuario = new Usuario();
+                usuario.nome = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+                usuario.email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+                usuario.id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                usuario.tipo = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData).Value;
+                mymodel.usuario = usuario;
+
+                return View(mymodel);
             }
-
-            return View(mymodel);
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
