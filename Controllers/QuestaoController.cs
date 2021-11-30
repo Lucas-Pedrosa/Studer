@@ -37,6 +37,11 @@ namespace Studer.Controllers
                 usuario.tipo = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData).Value;
                 myModel.usuario = usuario;
 
+                if (usuario.tipo == "aluno")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 return View(myModel);
             }
             return RedirectToAction("Index", "Login");
@@ -57,6 +62,11 @@ namespace Studer.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                if (User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData).Value == "aluno")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 if (alternativa is null)
                 {
                     return Json(new { msg = "Escolha a alternativa correta!", icon = "error" });
