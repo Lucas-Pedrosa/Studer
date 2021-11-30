@@ -8,6 +8,8 @@ using System.Dynamic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Studer.Controllers
 {
@@ -43,20 +45,35 @@ namespace Studer.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        
         [HttpPost]
-        public void criarSimulado(string formato, string vestibularSelect, string DisciplinaSelect)
+        public IActionResult criarSimulado(string formato, string vestibularSelect, string DisciplinaSelect)
         {
-
-            /*Console.WriteLine("\nvestibularInputRadio: "+vestibularInputRadio+
-                              "\ndisciplinaInputRadio: " + disciplinaInputRadio +
-                              "\nvestibularSelect: " + vestibularSelect +
-                              "\ndisciplinaSelect: " + disciplinaSelect);*/
 
             Console.WriteLine(formato+"" +
                             "\n vestibular: "+vestibularSelect+
                             "\n disciplina: "+ DisciplinaSelect);
 
-           
+            List<Caracteristica> caracteristicas = new List<Caracteristica>();
+
+            if (formato.Equals("vestibular"))
+            {
+                caracteristicas = this.manager.GetCaracteristicasDAO().getCaracteristicas(vestibularSelect);
+            }
+            else if (formato.Equals("disciplina"))
+            {
+                caracteristicas = this.manager.GetCaracteristicasDAO().getCaracteristicas(DisciplinaSelect);
+            }
+
+            List<Questao> questoes = new List<Questao>();
+
+            questoes = this.manager.GetQuestaoDAO().getQuestoes(caracteristicas);
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "questoes", questoes);
+
+            HttpContext.Session.SetInt32("id", 0);
+
+            return RedirectToAction("QuestaoSimulado", "Simulado");
 
             //return RedirectToAction("Index", "Simulado");
 
@@ -80,6 +97,26 @@ namespace Studer.Controllers
 
                 return Json(new { msg = $"Login efetuado com sucesso!", url = "Home", icon = "success" });
             }*/
+        }
+
+        [HttpPost]
+        public void selecionaQuestao(string id)
+        {
+            Console.WriteLine(""+id);
+        }
+
+        public IActionResult QuestaoSimulado()
+        {
+            List<Questao> questoes = SessionHelper.GetObjectFromJson<List<Questao>>(HttpContext.Session, "questoes");
+
+            string id = HttpContext.Session.GetString("id");
+
+            dynamic myModel = new ExpandoObject();
+
+            myModel.questoes = questoes;
+            myModel.id = id;
+
+            return View(myModel);
         }
     }
 }

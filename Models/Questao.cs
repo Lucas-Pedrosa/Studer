@@ -7,16 +7,16 @@ namespace Studer.Models
 {
     public class Questao
     {
-        private int id;
-        private string enunciado;
-        private string a;
-        private string b;
-        private string c;
-        private string d;
-        private string e;
-        private string alternativaCorreta;
-        private int idProfessor;
-        private int idDisciplina;
+        public int id;
+        public string enunciado;
+        public string a;
+        public string b;
+        public string c;
+        public string d;
+        public string e;
+        public string alternativaCorreta;
+        public int idProfessor;
+        public int idDisciplina;
 
         public Questao()
         {}

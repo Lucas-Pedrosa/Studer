@@ -14,6 +14,7 @@ namespace Studer.Models.DAO
         private VestibularDAO vestibularDAO;
         private DisciplinaDAO disciplinasDAO;
         private ProfessorDAO professorDAO;
+        private CaracteristicasDAO caracteristicasDAO;
 
         public Manager(MySqlDatabase mySqlDatabase)
         {
@@ -23,6 +24,7 @@ namespace Studer.Models.DAO
             this.vestibularDAO = new VestibularDAO(mySqlDatabase);
             this.disciplinasDAO = new DisciplinaDAO(mySqlDatabase);
             this.professorDAO = new ProfessorDAO(mySqlDatabase);
+            this.caracteristicasDAO = new CaracteristicasDAO(mySqlDatabase);
         }
 
         public IEstudanteDAO GetEstudanteDAO()
@@ -53,6 +55,11 @@ namespace Studer.Models.DAO
         public IProfessorDAO GetProfessorDAO()
         {
             return this.professorDAO;
+        }
+
+        public ICaracteristicasDAO GetCaracteristicasDAO()
+        {
+            return this.caracteristicasDAO;
         }
     }
 }

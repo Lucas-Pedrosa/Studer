@@ -74,5 +74,44 @@ namespace Studer.Models.DAO
                 return false;
             }
         }
+
+        public List<Questao> getQuestoes(List<Caracteristica> caracteristicas)
+        {
+            Questao questao;
+            List<Questao> questoes = new List<Questao>();
+
+            foreach (Caracteristica caracteristica in caracteristicas) {
+
+                var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
+                cmd.CommandText = @"select questao.* from questao
+                                inner join disciplina on disciplina.id = questao.id_disciplina
+                                where id_disciplina = @idDisciplina
+                                order by rand() limit @quantidade;";
+
+                cmd.Parameters.AddWithValue("@idDisciplina", caracteristica.GetIdDisciplina());
+                cmd.Parameters.AddWithValue("@quantidade", caracteristica.GetQuantidade());
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        questao = new Questao();
+                        questao.SetId(Convert.ToInt32(reader["id"]));
+                        questao.SetEnunciado(reader["enunciado"].ToString());
+                        questao.SetA(reader["a"].ToString());
+                        questao.SetB(reader["b"].ToString());
+                        questao.SetC(reader["c"].ToString());
+                        questao.SetD(reader["d"].ToString());
+                        questao.SetE(reader["e"].ToString());
+                        questao.SetAlternativaCorreta(reader["alternativa_correta"].ToString());
+                        questao.SetIdDisciplina(Convert.ToInt32(reader["id_disciplina"]));
+
+                        questoes.Add(questao);
+                    }
+                }
+            }
+
+            return questoes;
+        }
     }
 }

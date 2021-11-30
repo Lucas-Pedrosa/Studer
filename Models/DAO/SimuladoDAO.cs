@@ -52,5 +52,10 @@ namespace Studer.Models.DAO
                 return simulado;
             }
         }
+
+        public void criaSimulado()
+        {
+
+        }
     }
 }

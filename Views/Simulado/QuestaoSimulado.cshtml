@@ -1,0 +1,103 @@
+﻿
+@{
+}
+
+@model dynamic
+
+<!-- Bootstrap 5 Contact Form Snippet -->
+
+<link rel="stylesheet" href="/css/questao-page.css">
+
+<div class="container px-5 my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 rounded-3 shadow-lg">
+        <div class="card-body p-4">
+
+          <!-- * * * * * * * * * * * * * *
+          // * * SB Forms Contact Form * *
+          // * * * * * * * * * * * * * * *
+
+          // This form is pre-integrated with SB Forms.
+          // To make this form functional, sign up at
+          // https://startbootstrap.com/solution/contact-forms
+          // to get an API token!
+          -->
+
+         
+
+          <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+
+            <div class="text-center mb-1">
+                <label>@Model.questoes[0].GetEnunciado()</label>
+            </div>
+
+            <!-- Name Input -->
+            <div class="form-floating mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="alternativaA" type="radio" name="formato" value="alternativaA" data-sb-validations="required" />
+                <label class="form-check-label" for="alternativaA">Alternativa A</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="alternativaB" type="radio" name="formato" value="alternativaB" data-sb-validations="required" />
+                <label class="form-check-label" for="alternativaB">Alternativa B</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="alternativaC" type="radio" name="formato" value="alternativaC" data-sb-validations="required" />
+                <label class="form-check-label" for="alternativaC">Alternativa C</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="alternativaD" type="radio" name="formato" value="alternativaD" data-sb-validations="required" />
+                <label class="form-check-label" for="alternativaD">Alternativa D</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" id="alternativaE" type="radio" name="formato" value="alternativaE" data-sb-validations="required" />
+                <label class="form-check-label" for="alternativaE">Alternativa E</label>
+              </div>
+            </div>
+            
+            <!-- Submit button -->
+            
+          </form>
+          <!-- End of contact form -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form asp-controller="Simulado" asp-action="selecionaQuestao" method="post">
+
+    <div style="display: flex;flex-direction: row;justify-content: center;">
+
+    
+        @for(int i = 0; i < 5; i++)
+        {
+
+                <button name="id" type="submit" id="submit" value="@i" class="shadow-lg" 
+                style="width: 70px;margin: 20px;padding: 10px;text-align: center;">@i</button>
+           
+        }
+    
+    </div>
+
+    <div class="d-grid">
+            <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+    </div>
+</form>
+
+<!-- CDN Link to SB Forms Scripts -->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
