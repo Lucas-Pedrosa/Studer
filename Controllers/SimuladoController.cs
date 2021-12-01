@@ -54,6 +54,19 @@ namespace Studer.Controllers
                             "\n vestibular: "+vestibularSelect+
                             "\n disciplina: "+ DisciplinaSelect);
 
+            int idSimulado = 0;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                int idEstudante = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+                idSimulado = this.manager.GetSimuladoDAO().criaSimulado(idEstudante);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             List<Caracteristica> caracteristicas = new List<Caracteristica>();
 
             if (formato.Equals("vestibular"))
@@ -62,61 +75,146 @@ namespace Studer.Controllers
             }
             else if (formato.Equals("disciplina"))
             {
-                caracteristicas = this.manager.GetCaracteristicasDAO().getCaracteristicas(DisciplinaSelect);
+                List<Disciplina> disciplinas = this.manager.GetDisciplinaDAO().getDisciplinas();
+
+                Caracteristica caracteristica = new Caracteristica();
+
+                foreach (Disciplina disciplina in disciplinas)
+                {
+                    if (disciplina.GetNome() == DisciplinaSelect)
+                    {
+                        caracteristica.SetIdDisciplina(disciplina.GetId());
+                        caracteristica.SetQuantidade(5);
+
+                        caracteristicas.Add(caracteristica);
+                    }
+                }
             }
 
             List<Questao> questoes = new List<Questao>();
 
             questoes = this.manager.GetQuestaoDAO().getQuestoes(caracteristicas);
 
+            List<SimuladoRealizado> simuladoRealizado = new List<SimuladoRealizado>();
+
+            SimuladoRealizado questaoSimulado;
+
+            List<int> idQuestoes = new List<int>();
+
+            foreach (Questao questao in questoes)
+            {
+                idQuestoes.Add(questao.GetId());
+
+                questaoSimulado = new SimuladoRealizado();
+                questaoSimulado.setIdSimulado(idSimulado);
+                questaoSimulado.setIdQuestao(questao.GetId());
+                simuladoRealizado.Add(questaoSimulado);
+            }
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "simulado", simuladoRealizado);
+
             SessionHelper.SetObjectAsJson(HttpContext.Session, "questoes", questoes);
 
-            HttpContext.Session.SetInt32("id", 0);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "idQuestoes", idQuestoes);
+
+            HttpContext.Session.SetInt32("id", questoes[0].GetId());
 
             return RedirectToAction("QuestaoSimulado", "Simulado");
-
-            //return RedirectToAction("Index", "Simulado");
-
-            /*Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
-
-            if (estudante is null)
-            {
-                return Json(new { msg = "Credenciais incorretas, tente novamente", icon = "error" });
-            }
-            else
-            {
-                List<Claim> direitosAcesso = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, estudante.GetId().ToString()),
-                    new Claim(ClaimTypes.Name, estudante.GetNome()),
-                    new Claim(ClaimTypes.Email, estudante.GetEmail())
-                };
-
-                var identity = new ClaimsIdentity(direitosAcesso, "Identity.Login");
-                var userPrincipal = new ClaimsPrincipal(new[] { identity });
-
-                return Json(new { msg = $"Login efetuado com sucesso!", url = "Home", icon = "success" });
-            }*/
         }
 
         [HttpPost]
-        public void selecionaQuestao(string id)
+        public IActionResult selecionaQuestao(int id, string formato)
         {
-            Console.WriteLine(""+id);
+            try
+            {
+                if (!formato.Equals(null))
+                {
+                    List<Questao> questoes = SessionHelper.GetObjectFromJson<List<Questao>>(HttpContext.Session, "questoes");
+
+                    List<SimuladoRealizado> simuladoRealizado = SessionHelper.GetObjectFromJson<List<SimuladoRealizado>>(HttpContext.Session, "simulado");
+
+                    int counter = 0;
+
+                    foreach (Questao questao in questoes)
+                    {
+                        if (HttpContext.Session.GetInt32("id").Value == questao.GetId())
+                        {
+                            simuladoRealizado[counter].setAlternativa(formato);
+                        }
+
+                        counter++;
+                    }
+
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "simulado", simuladoRealizado);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            HttpContext.Session.SetInt32("id", Convert.ToInt32(id));
+
+            return RedirectToAction("QuestaoSimulado", "Simulado");
         }
 
         public IActionResult QuestaoSimulado()
         {
             List<Questao> questoes = SessionHelper.GetObjectFromJson<List<Questao>>(HttpContext.Session, "questoes");
 
-            string id = HttpContext.Session.GetString("id");
+            int id = HttpContext.Session.GetInt32("id").Value;
+
+            List<int> idQuestoes = SessionHelper.GetObjectFromJson<List<int>>(HttpContext.Session, "idQuestoes");
+
+            List<SimuladoRealizado> simuladoRealizado = SessionHelper.GetObjectFromJson<List<SimuladoRealizado>>(HttpContext.Session, "simulado");
 
             dynamic myModel = new ExpandoObject();
 
             myModel.questoes = questoes;
             myModel.id = id;
+            myModel.idQuestoes = idQuestoes;
+            myModel.simulado = simuladoRealizado;
 
             return View(myModel);
+        }
+
+        [HttpPost]
+        public void simuladoFinalizado(int id, string formato)
+        {
+
+            try
+            {
+                if (!formato.Equals(null))
+                {
+                    List<Questao> questoes = SessionHelper.GetObjectFromJson<List<Questao>>(HttpContext.Session, "questoes");
+
+                    List<SimuladoRealizado> simuladoRealizado = SessionHelper.GetObjectFromJson<List<SimuladoRealizado>>(HttpContext.Session, "simulado");
+
+                    int counter = 0;
+
+                    foreach (Questao questao in questoes)
+                    {
+                        if (HttpContext.Session.GetInt32("id").Value == questao.GetId())
+                        {
+                            simuladoRealizado[counter].setAlternativa(formato);
+                        }
+
+                        counter++;
+                    }
+
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "simulado", simuladoRealizado);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            HttpContext.Session.SetInt32("id", Convert.ToInt32(id));
+
+            List<SimuladoRealizado> simulado = SessionHelper.GetObjectFromJson<List<SimuladoRealizado>>(HttpContext.Session, "simulado");
+            
+            this.manager.GetSimuladoRealizadoDAO().insereSimuladoRealizado(simulado);
         }
     }
 }

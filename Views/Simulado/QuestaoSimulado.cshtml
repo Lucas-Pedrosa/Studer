@@ -8,6 +8,8 @@
 
 <link rel="stylesheet" href="/css/questao-page.css">
 
+ <form asp-controller="Simulado" asp-action="selecionaQuestao" method="post">
+
 <div class="container px-5 my-5">
   <div class="row justify-content-center">
     <div class="col-lg-8">
@@ -24,53 +26,156 @@
           // to get an API token!
           -->
 
-         
+            @{
 
-          <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                //fazer foreach nas questoes, procurar questao pelo Model.id, criar variável,
+                //passar essa questão pra variavel, e trocar os @Model.questoes[@Model.id] pela variavel
+
+            }
+
+            @{
+                string enunciado = "";
+
+                foreach(Questao questaoEnunciado in SessionHelper.GetObjectFromJson<List<Questao>>(Context.Session, "questoes"))
+                {
+                    if(questaoEnunciado.GetId() == Model.id)
+                    {
+                        enunciado = questaoEnunciado.GetEnunciado();
+                    }
+                }
+            }
+            
 
             <div class="text-center mb-1">
-                <label>@Model.questoes[0].GetEnunciado()</label>
+                <label>@enunciado</label>
             </div>
+
+            @{
+                List<SimuladoRealizado> simuladoRealizado = SessionHelper.GetObjectFromJson<List<SimuladoRealizado>>(Context.Session, "simulado");
+
+                string alternativa = "";
+
+                foreach(SimuladoRealizado simulado in simuladoRealizado)
+                {
+                    if(simulado.getIdQuestao() == Model.id)
+                    {
+                        if (simulado.getAlternativa() != null)
+                        {
+                            alternativa = simulado.getAlternativa();
+                        }                        
+                    }
+                }
+            }
+
+            @{
+                foreach(Questao questao in SessionHelper.GetObjectFromJson<List<Questao>>(Context.Session, "questoes"))
+                {
+                    if(questao.GetId() == Model.id)
+                    {
+
+                        if (alternativa == "A")
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaA" type="radio" name="formato" checked value="A" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaA">@questao.GetA()</label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaA" type="radio" name="formato" value="A" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaA">@questao.GetA()</label>
+                                </div>
+                            </div>
+                        }
+
+                        if (alternativa == "B")
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaB" type="radio" name="formato" checked value="B" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaB">@questao.GetB()</label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaB" type="radio" name="formato" value="B" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaB">@questao.GetB()</label>
+                                </div>
+                            </div>
+                        }
+
+                        if (alternativa == "C")
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaC" type="radio" name="formato" checked value="C" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaC">@questao.GetC()</label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaC" type="radio" name="formato" value="C" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaC">@questao.GetC()</label>
+                                </div>
+                            </div>
+                        }
+
+                        if (alternativa == "D")
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaD" type="radio" name="formato" checked value="D" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaD">@questao.GetD()</label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaD" type="radio" name="formato" value="D" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaD">@questao.GetD()</label>
+                                </div>
+                            </div>
+                        }
+
+                        if (alternativa == "E")
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaE" type="radio" name="formato" checked value="E" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaE">@questao.GetE()</label>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-floating mb-3">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" id="alternativaE" type="radio" name="formato" value="E" data-sb-validations="required" />
+                                <label class="form-check-label" for="alternativaE">@questao.GetE()</label>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            }
 
             <!-- Name Input -->
-            <div class="form-floating mb-3">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" id="alternativaA" type="radio" name="formato" value="alternativaA" data-sb-validations="required" />
-                <label class="form-check-label" for="alternativaA">Alternativa A</label>
-              </div>
-            </div>
-
-            <div class="form-floating mb-3">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" id="alternativaB" type="radio" name="formato" value="alternativaB" data-sb-validations="required" />
-                <label class="form-check-label" for="alternativaB">Alternativa B</label>
-              </div>
-            </div>
-
-            <div class="form-floating mb-3">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" id="alternativaC" type="radio" name="formato" value="alternativaC" data-sb-validations="required" />
-                <label class="form-check-label" for="alternativaC">Alternativa C</label>
-              </div>
-            </div>
-
-            <div class="form-floating mb-3">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" id="alternativaD" type="radio" name="formato" value="alternativaD" data-sb-validations="required" />
-                <label class="form-check-label" for="alternativaD">Alternativa D</label>
-              </div>
-            </div>
-
-            <div class="form-floating mb-3">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" id="alternativaE" type="radio" name="formato" value="alternativaE" data-sb-validations="required" />
-                <label class="form-check-label" for="alternativaE">Alternativa E</label>
-              </div>
-            </div>
+            
             
             <!-- Submit button -->
             
-          </form>
           <!-- End of contact form -->
 
         </div>
@@ -79,15 +184,13 @@
   </div>
 </div>
 
-<form asp-controller="Simulado" asp-action="selecionaQuestao" method="post">
-
-    <div style="display: flex;flex-direction: row;justify-content: center;">
+    <div style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
 
     
-        @for(int i = 0; i < 5; i++)
+        @for(int i = 0; i < @Model.idQuestoes.Count; i++)
         {
 
-                <button name="id" type="submit" id="submit" value="@i" class="shadow-lg" 
+                <button name="id" type="submit" id="submit" value="@Model.idQuestoes[i]" class="shadow-lg" 
                 style="width: 70px;margin: 20px;padding: 10px;text-align: center;">@i</button>
            
         }
@@ -95,7 +198,7 @@
     </div>
 
     <div class="d-grid">
-            <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+            <button name="simuladoFinalizado" value="Finalizado" formaction="simuladoFinalizado" class="btn btn-primary btn-lg" id="finalizado" type="submit">Finalizar</button>
     </div>
 </form>
 

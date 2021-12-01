@@ -53,9 +53,38 @@ namespace Studer.Models.DAO
             }
         }
 
-        public void criaSimulado()
+        public int criaSimulado(int idEstudante)
         {
+            try
+            {
+                var cmd = this.mySqlDatabase.Connection.CreateCommand() as MySqlCommand;
+                cmd.CommandText = @"INSERT INTO simulado(id_estudante) VALUES (@id_estudante);";
+                cmd.Parameters.AddWithValue("@id_estudante", idEstudante);
 
+                var recs = cmd.ExecuteNonQuery();
+
+            }
+            catch (MySqlException e)
+            {
+            }
+
+            int id = 0;
+
+            var command = mySqlDatabase.Connection.CreateCommand();
+            command.CommandText = "select * from simulado WHERE id = (SELECT MAX(id) FROM simulado);";
+
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    id = Convert.ToInt32(reader["id"]);
+                    return id;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
         }
     }
 }

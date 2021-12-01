@@ -8,5 +8,7 @@ namespace Studer.Models.Interfaces
     interface ISimuladoDAO
     {
         public Simulado getSimulado(int idSimulado);
+
+        public int criaSimulado(int idEstudante);
     }
 }
