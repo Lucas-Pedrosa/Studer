@@ -10,10 +10,14 @@ namespace Studer.Models
         private int id;
         private int idDesempenho;
         private List<Questao> listaQuestoes;
+        private List<Caracteristica> caracteristicas;
         private int idVestibular;
 
         public Simulado()
-        {}
+        {
+            this.listaQuestoes = new List<Questao>();
+            this.caracteristicas = new List<Caracteristica>();
+        }
 
         public int GetId()
         {
@@ -45,9 +49,19 @@ namespace Studer.Models
             this.listaQuestoes = listaQuestoes;
         }
 
+        public List<Caracteristica> GetCaracteristicas()
+        {
+            return caracteristicas;
+        }
+
+        public void SetCaracteristicas(List<Caracteristica> caracteristicas)
+        {
+            this.caracteristicas = caracteristicas;
+        }
+
         public int GetIdVestibular()
         {
-            return id;
+            return this.idVestibular;
         }
 
         public void SetIdVestibular(int idVestibular)

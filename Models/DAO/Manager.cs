@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Studer.Models.DAO
 {
-    class Manager {
+    public class Manager {
+
         private QuestaoDAO questaoDAO;
         private SimuladoDAO simuladoDAO;
         private EstudanteDAO estudanteDAO;

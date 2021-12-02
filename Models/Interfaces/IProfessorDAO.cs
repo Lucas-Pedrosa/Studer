@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Studer.Models.Interfaces
 {
-    interface IProfessorDAO
+    public interface IProfessorDAO
     {
         public Professor getProfessor(int id);
         public Professor login(string email, string senha);

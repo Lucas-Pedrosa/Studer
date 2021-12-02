@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Studer.Models.Interfaces
 {
-    interface ISimuladoDAO
+    public interface ISimuladoDAO
     {
         public Simulado getSimulado(int idSimulado);
 

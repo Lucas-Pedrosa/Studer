@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Studer.Models.Interfaces
 {
-    interface IEstudanteDAO
+    public interface IEstudanteDAO
     {
         public Estudante getEstudante(int id);
         public Estudante login(string email, string senha);
