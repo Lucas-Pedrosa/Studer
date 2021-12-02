@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Studer.Controllers.Strategy;
 using Studer.Database;
 using Studer.Exceptions;
 using Studer.Models;
@@ -14,10 +15,12 @@ namespace Studer.Controllers
     public class LoginController : Controller
     {
         private Manager manager;
+        private MySqlDatabase mySqlDatabase;
 
         public LoginController(MySqlDatabase mySqlDatabase)
         {
             manager = new Manager(mySqlDatabase);
+            this.mySqlDatabase = mySqlDatabase;
         }
 
         // GET: Login
@@ -34,7 +37,8 @@ namespace Studer.Controllers
         [HttpPost]
         public async Task<IActionResult> Logar(string email, string senha, bool manterlogado)
         {
-            Estudante estudante = manager.GetEstudanteDAO().login(email, senha);
+            LoginStrategy contexto = new LoginStrategyEstudante(mySqlDatabase);
+            Usuario estudante = contexto.Login(email, senha);
 
             if (estudante is null)
             {
@@ -42,7 +46,7 @@ namespace Studer.Controllers
             }
             else
             {
-                await SetClaims(estudante.GetId(), estudante.GetNome(), estudante.GetEmail(), manterlogado, "aluno");
+                await SetClaims(estudante.id, estudante.nome, estudante.email, manterlogado, "aluno");
                 return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
         }
@@ -61,7 +65,8 @@ namespace Studer.Controllers
         [HttpPost]
         public async Task<IActionResult> LogarProfessor(string email, string senha, bool manterlogado)
         {
-            Professor professor = manager.GetProfessorDAO().login(email, senha);
+            LoginStrategy contexto = new LoginStrategyProfessor(mySqlDatabase);
+            Usuario professor = contexto.Login(email, senha);
 
             if (professor is null)
             {
@@ -69,7 +74,7 @@ namespace Studer.Controllers
             }
             else
             {
-                await SetClaims(professor.GetId(), professor.GetNome(), professor.GetEmail(), manterlogado, "professor");
+                await SetClaims(professor.id, professor.nome, professor.email, manterlogado, "professor");
                 return Json(new { msg = "Login efetuado com sucesso", icon = "success", url = "/Home" });
             }
         }
