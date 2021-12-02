@@ -10,12 +10,7 @@ namespace Studer.Controllers.Strategy
 {
     public class LoginStrategyEstudante : LoginStrategy
     {
-
-        public LoginStrategyEstudante(MySqlDatabase mySqlDatabase) : base(mySqlDatabase)
-        {
-        }
-
-        public override Usuario Login(string email, string senha)
+        public override Usuario Login(string email, string senha, Manager manager)
         {
             return manager.GetEstudanteDAO().login(email, senha);
         }

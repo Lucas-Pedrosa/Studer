@@ -37,8 +37,8 @@ namespace Studer.Controllers
         [HttpPost]
         public async Task<IActionResult> Logar(string email, string senha, bool manterlogado)
         {
-            LoginStrategy contexto = new LoginStrategyEstudante(mySqlDatabase);
-            Usuario estudante = contexto.Login(email, senha);
+            LoginContext contexto = new LoginContext(new LoginStrategyEstudante());
+            Usuario estudante = contexto.RealizarLogin(email, senha, manager);
 
             if (estudante is null)
             {
@@ -65,8 +65,8 @@ namespace Studer.Controllers
         [HttpPost]
         public async Task<IActionResult> LogarProfessor(string email, string senha, bool manterlogado)
         {
-            LoginStrategy contexto = new LoginStrategyProfessor(mySqlDatabase);
-            Usuario professor = contexto.Login(email, senha);
+            LoginContext contexto = new LoginContext(new LoginStrategyProfessor());
+            Usuario professor = contexto.RealizarLogin(email, senha, manager);
 
             if (professor is null)
             {

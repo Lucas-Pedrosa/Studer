@@ -10,13 +10,6 @@ namespace Studer.Controllers
 {
     public abstract class LoginStrategy
     {
-        internal Manager manager;
-
-        public LoginStrategy(MySqlDatabase mySqlDatabase)
-        {
-            manager = new Manager(mySqlDatabase);
-        }
-
-        public abstract Usuario Login(string email, string senha);
+        public abstract Usuario Login(string email, string senha, Manager manager);
     }
 }
